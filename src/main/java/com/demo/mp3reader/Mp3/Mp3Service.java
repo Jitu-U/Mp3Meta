@@ -67,45 +67,11 @@ public class Mp3Service {
             song.setId(UUID.randomUUID());
             songs.add(song);
 
-            /*
-            for(String name : metadataNames){
 
-                System.out.println(name + ": " + metadata.get(name));
-            }
-
-
-            // Retrieve the necessary info from metadata
-            // Names - title, xmpDM:artist etc. - mentioned below may differ based
-            System.out.println("----------------------------------------------");
-            System.out.println("Title: " + metadata.get("title"));
-            System.out.println("Artists: " + metadata.get("xmpDM:artist"));
-            System.out.println("Composer : "+metadata.get("xmpDM:composer"));
-            System.out.println("Genre : "+metadata.get("xmpDM:genre"));
-            System.out.println("Album : "+metadata.get("xmpDM:album"));
-            */
         }
 
         mp3Repository.saveAll(songs);
         return songs;
-    /*
-        Stream<Path> paths = Files.walk(Paths.get(path));
-        paths.filter(Files::isRegularFile)
-
-                .forEach(f -> {
-                    if( f.getFileName().toString().endsWith(".mp3")){
-                        BasicFileAttributeView view = Files.getFileAttributeView(f, BasicFileAttributeView.class);
-                        try {
-
-                            BasicFileAttributes Attr = view.readAttributes();
-                            System.out.println(Attr.creationTime());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-
-
-     */
     }
 
     public List<Mp3> getSongs() {
