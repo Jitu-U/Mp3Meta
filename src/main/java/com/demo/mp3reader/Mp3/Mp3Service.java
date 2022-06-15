@@ -25,7 +25,7 @@ import java.util.UUID;
 public class Mp3Service {
 
 
-    private final Mp3Repository mp3Repository;
+    private static Mp3Repository mp3Repository;
 
     public static Logger logger = null;
     static ContentHandler handler = new DefaultHandler();
