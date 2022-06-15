@@ -13,12 +13,13 @@ function SongCard(props) {
             <div className="artist">
                 {props.artist}
             </div>
-            <div className="composer">
-                {props.composer}
-            </div>
             <div className="album">
                 {props.album}
             </div>
+            <div className="composer">
+                {props.composer}
+            </div>
+            
 
             </div>
             
