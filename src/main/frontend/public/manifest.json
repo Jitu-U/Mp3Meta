@@ -1,0 +1,8 @@
+{
+  "short_name": "Mp3 Meta",
+  "name": "App Created using Spring and React",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

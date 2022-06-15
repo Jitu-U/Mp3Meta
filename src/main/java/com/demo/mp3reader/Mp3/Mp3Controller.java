@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/songs")
+@CrossOrigin("http://localhost:3000")
 public class Mp3Controller {
 
 
@@ -38,7 +39,7 @@ public class Mp3Controller {
     //Initial Request to get All Files from a Folder
     @PostMapping
     public List<Mp3> getSongsFromFolder() throws TikaException, IOException, SAXException {
-        return Mp3Service.getAllMp3Files("/Users/jitu/Music/Music/Media.localized/Music/Unknown Artist/Unknown Album");
+        return Mp3Service.getAllMp3Files("/Users/jitu/Music");
     }
 
     @DeleteMapping(path="{songId}")
