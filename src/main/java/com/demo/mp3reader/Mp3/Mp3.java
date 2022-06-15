@@ -40,11 +40,11 @@ public class Mp3 {
                    String channelType) {
 
                 this.name = name;
-                this.title = title;
-                this.artist = artist;
-                this.composer = composer;
-                this.genre = genre;
-                this.album = album;
+                this.title = title == null ? name : title;
+                this.artist = artist == null ? "Unknown Artist" : artist;
+                this.composer = composer == null ? "Unknown Composers" : composer;
+                this.genre = genre == null ? "Unknown Genre": genre;
+                this.album = album == null ? "Unknown Album" : album;
                 this.sampleRate = sampleRate;
                 this.releaseYear = releaseYear;
                 this.channels = channels;

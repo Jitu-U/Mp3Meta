@@ -1,6 +1,5 @@
 package com.demo.mp3reader.Mp3;
 
-import ch.qos.logback.classic.Logger;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -27,7 +26,6 @@ public class Mp3Service {
 
     private static Mp3Repository mp3Repository;
 
-    public static Logger logger = null;
     static ContentHandler handler = new DefaultHandler();
     static Metadata metadata = new Metadata();
     static Parser parser = new Mp3Parser();
@@ -35,24 +33,22 @@ public class Mp3Service {
 
     @Autowired
     public Mp3Service(Mp3Repository mp3Repository) {
-        this.mp3Repository = mp3Repository;
+        Mp3Service.mp3Repository = mp3Repository;
     }
 
     public static List<Mp3> getAllMp3Files(String path) throws IOException, TikaException, SAXException {
         File file = new File(path);
        File[] files = file.listFiles((dir,name) -> name.toLowerCase().endsWith(".mp3"));
 
-        List<Mp3> songs = new ArrayList<Mp3>();
+        List<Mp3> songs = new ArrayList<>();
         assert files != null;
         for(File f: files){
-            InputStream input = new FileInputStream(new File(f.getAbsolutePath()));
+            InputStream input = new FileInputStream(f.getAbsolutePath());
 
             parser.parse(input, handler, metadata, parseCtx);
             input.close();
 
-            // List all metadata
-            String[] metadataNames = metadata.names();
-
+            //Creating New MP3 Object With File Metadata
             Mp3 song = new Mp3(
                     f.getName(),
                     metadata.get("title"),
@@ -60,7 +56,7 @@ public class Mp3Service {
                     metadata.get("xmpDM:composer"),
                     metadata.get("xmpDM:genre"),
                     metadata.get("xmpDM:album"),
-                    metadata.get("xmpDM:audioSampleRate").toString(),
+                    metadata.get("xmpDM:audioSampleRate"),
                     metadata.get("xmpDM:releaseDate"),
                     metadata.get("channels"),
                     metadata.get("xmpDM:audioChannelType"));
@@ -72,6 +68,15 @@ public class Mp3Service {
 
         mp3Repository.saveAll(songs);
         return songs;
+    }
+
+    public static String deleteSongById(UUID id) {
+        boolean ifExists = mp3Repository.existsById(id);
+        if(!ifExists){
+            throw new IllegalStateException("Song with ID "+ id + " does not Exist in DB");
+        }
+        mp3Repository.deleteById(id);
+        return "Successfully Deleted";
     }
 
     public List<Mp3> getSongs() {
